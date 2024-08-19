@@ -15,7 +15,7 @@ public class ExcelFrameWork {
 
 			workbook = new XSSFWorkbook(excelpath);
 
-			sheet = workbook.getSheet("sheetName");
+			sheet = workbook.getSheet("sheet1");
 
 		} catch (Exception exp) {
 
@@ -26,17 +26,15 @@ public class ExcelFrameWork {
 
 	public static void main(String[] args) {
 		getRowCount();
-		getcellDataString (1,1);
+		getcellDataString (0,0);
 		getcellDataNumber (1,1);
 
 	}
 
-	public static void getRowCount() {
-
+	public static int getRowCount() {
+		int rowCount = 0;
 		try {
-
-
-			int rowCount = sheet.getPhysicalNumberOfRows();
+			 rowCount = sheet.getPhysicalNumberOfRows();
 			System.out.println("Number of rows : " + rowCount);
 			
 
@@ -46,16 +44,33 @@ public class ExcelFrameWork {
 			System.out.println(exp.getCause());
 			exp.printStackTrace();
 
-		}
+		}return rowCount;
+	
 	}
+	public static int  getColCount() {
 
-	public static void getcellDataString (int rowNum , int colNum) {
-
+		int colCount = 0;
+		
 		try {
+			 colCount = sheet.getRow(0).getPhysicalNumberOfCells();
+			System.out.println("Number of colum : " + colCount);
+			
 
+		} catch (Exception exp) {
 
-			String cellData = sheet.getRow(rowNum).getCell(colNum).getStringCellValue();
-			System.out.println(cellData);
+			System.out.println(exp.getMessage());
+			System.out.println(exp.getCause());
+			exp.printStackTrace();
+
+		}return colCount;
+	
+	}
+	public static String  getcellDataString (int rowNum , int colNum) {
+
+		String cellData =null;
+		try {
+			 cellData = sheet.getRow(rowNum).getCell(colNum).getStringCellValue();
+			//System.out.println(cellData);
 
 		}catch (Exception exp) {
 
@@ -63,7 +78,9 @@ public class ExcelFrameWork {
 			System.out.println(exp.getCause());
 			exp.printStackTrace();
 
-		}}
+		}return cellData;
+	}	
+	
 
 	public static void getcellDataNumber(int rowNum , int colNum) {
 
@@ -71,7 +88,7 @@ public class ExcelFrameWork {
 
 
 			double  cellData = sheet.getRow(rowNum).getCell(colNum).getNumericCellValue ();
-			System.out.println(cellData);
+			//System.out.println(cellData);
 
 		}catch (Exception exp) {
 
